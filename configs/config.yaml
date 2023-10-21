@@ -1,0 +1,385 @@
+RUN:
+  interactive: false
+  waitkey: false
+
+WORLD:
+  WIDTH: 24
+  HEIGHT: 24
+
+SPRITE:
+  PATH: "./assets/spritesheets/punyworld-overworld-tileset.png"
+  COORD:
+    GRASS:
+      - 16
+      - 0
+    WATER:
+      - 128
+      - 176
+    FOREST:
+      - 16
+      - 128
+    COASTN:
+      - 128
+      - 160
+    COASTE:
+      - 144
+      - 176
+    COASTS:
+      - 128
+      - 192
+    COASTW:
+      - 112
+      - 176
+    COASTNE:
+      - 144
+      - 160
+    COASTSE:
+      - 144
+      - 192
+    COASTSW:
+      - 112
+      - 192
+    COASTNW:
+      - 112
+      - 160
+    COASTNE2:
+      - 176
+      - 160
+    COASTSE2:
+      - 176
+      - 176
+    COASTSW2:
+      - 160
+      - 176
+    COASTNW2:
+      - 160
+      - 160
+    FORESTN:
+      - 16
+      - 144
+    FORESTE:
+      - 0
+      - 128
+    FORESTS:
+      - 16
+      - 112
+    FORESTW:
+      - 32
+      - 128
+    FORESTNE:
+      - 0
+      - 144
+    FORESTSE:
+      - 0
+      - 112
+    FORESTSW:
+      - 32
+      - 112
+    FORESTNW:
+      - 32
+      - 144
+    FORESTNE2:
+      - 96
+      - 128
+    FORESTSE2:
+      - 96
+      - 112
+    FORESTSW2:
+      - 112
+      - 112
+    FORESTNW2:
+      - 112
+      - 128
+    ROCKN:
+      - 16
+      - 96
+    ROCKE:
+      - 0
+      - 80
+    ROCKS:
+      - 16
+      - 64
+    ROCKW:
+      - 32
+      - 80
+    ROCKNE:
+      - 0
+      - 96
+    ROCKSE:
+      - 0
+      - 64
+    ROCKSW:
+      - 32
+      - 64
+    ROCKNW:
+      - 32
+      - 96
+
+TILE:
+  SIZE: 16
+  SCALE: 2
+
+  TYPES:
+    - GRASS
+    - WATER
+    - FOREST
+    - COASTN
+    - COASTE
+    - COASTS
+    - COASTW
+    - COASTNE
+    - COASTSE
+    - COASTSW
+    - COASTNW
+    - COASTNE2
+    - COASTSE2
+    - COASTSW2
+    - COASTNW2
+    - ROCKN
+    - ROCKS
+    - ROCKW
+    - ROCKE
+    - FORESTN
+    - FORESTE
+    - FORESTS
+    - FORESTW
+    - FORESTNE
+    - FORESTSE
+    - FORESTSW
+    - FORESTNW
+    - FORESTNE2
+    - FORESTSE2
+    - FORESTSW2
+    - FORESTNW2
+
+  EDGES:
+    - GRASS
+    - WATER
+    - FOREST
+    - COASTN
+    - COASTE
+    - COASTS
+    - COASTW
+    - FORESTN
+    - FORESTE
+    - FORESTS
+    - FORESTW
+    - ROCKN
+    - ROCKE
+    - ROCKS
+    - ROCKW
+    - ROCK
+
+  RULES:
+    COASTE:
+      - COASTE
+      - GRASS
+      - COASTE
+      - WATER
+    COASTN:
+      - GRASS
+      - COASTN
+      - WATER
+      - COASTN
+    COASTNE:
+      - GRASS
+      - GRASS
+      - COASTE
+      - COASTN
+    COASTNE2:
+      - COASTE
+      - COASTN
+      - WATER
+      - WATER
+    COASTNW:
+      - GRASS
+      - COASTN
+      - COASTW
+      - GRASS
+    COASTNW2:
+      - COASTW
+      - WATER
+      - WATER
+      - COASTN
+    COASTS:
+      - WATER
+      - COASTS
+      - GRASS
+      - COASTS
+    COASTSE:
+      - COASTE
+      - GRASS
+      - GRASS
+      - COASTS
+    COASTSE2:
+      - WATER
+      - COASTS
+      - COASTE
+      - WATER
+    COASTSW:
+      - COASTW
+      - COASTS
+      - GRASS
+      - GRASS
+    COASTSW2:
+      - WATER
+      - WATER
+      - COASTW
+      - COASTS
+    COASTW:
+      - COASTW
+      - WATER
+      - COASTW
+      - GRASS
+    FOREST:
+      - FOREST
+      - FOREST
+      - FOREST
+      - FOREST
+    FORESTE:
+      - FORESTE
+      - FOREST
+      - FORESTE
+      - GRASS
+    FORESTN:
+      - FOREST
+      - FORESTN
+      - GRASS
+      - FORESTN
+    FORESTNE:
+      - FORESTE
+      - FORESTN
+      - GRASS
+      - GRASS
+    FORESTNE2:
+      - FOREST
+      - FOREST
+      - FORESTE
+      - FORESTN
+    FORESTNW:
+      - FORESTW
+      - GRASS
+      - GRASS
+      - FORESTN
+    FORESTNW2:
+      - FOREST
+      - FORESTN
+      - FORESTW
+      - FOREST
+    FORESTS:
+      - GRASS
+      - FORESTS
+      - FOREST
+      - FORESTS
+    FORESTSE:
+      - GRASS
+      - FORESTS
+      - FORESTE
+      - GRASS
+    FORESTSE2:
+      - FORESTE
+      - FOREST
+      - FOREST
+      - FORESTS
+    FORESTSW:
+      - GRASS
+      - GRASS
+      - FORESTW
+      - FORESTS
+    FORESTSW2:
+      - FORESTW
+      - FORESTS
+      - FOREST
+      - FOREST
+    FORESTW:
+      - FORESTW
+      - GRASS
+      - FORESTW
+      - FOREST
+    GRASS:
+      - GRASS
+      - GRASS
+      - GRASS
+      - GRASS
+    ROCKE:
+      - ROCKE
+      - ROCK
+      - ROCKE
+      - GRASS
+    ROCKN:
+      - ROCK
+      - ROCKN
+      - GRASS
+      - ROCKN
+    ROCKNE:
+      - ROCKE
+      - ROCKN
+      - GRASS
+      - GRASS
+    ROCKNW:
+      - ROCKW
+      - GRASS
+      - GRASS
+      - ROCKN
+    ROCKS:
+      - GRASS
+      - ROCKS
+      - ROCK
+      - ROCKS
+    ROCKSE:
+      - GRASS
+      - ROCKS
+      - ROCKE
+      - GRASS
+    ROCKSW:
+      - GRASS
+      - GRASS
+      - ROCKW
+      - ROCKS
+    ROCKW:
+      - ROCKW
+      - GRASS
+      - ROCKW
+      - ROCK
+    WATER:
+      - WATER
+      - WATER
+      - WATER
+      - WATER
+
+  WEIGHTS:
+    GRASS: 16
+    WATER: 4
+    FOREST: 5
+    COASTN: 5
+    COASTE: 5
+    COASTS: 5
+    COASTW: 5
+    COASTNE: 5
+    COASTSE: 5
+    COASTSW: 5
+    COASTNW: 5
+    COASTNE2: 2
+    COASTSE2: 2
+    COASTSW2: 2
+    COASTNW2: 2
+    FORESTN: 4
+    FORESTE: 4
+    FORESTS: 4
+    FORESTW: 4
+    FORESTNE: 4
+    FORESTSE: 4
+    FORESTSW: 4
+    FORESTNW: 4
+    FORESTNE2: 2
+    FORESTSE2: 2
+    FORESTSW2: 2
+    FORESTNW2: 2
+    ROCKN: 4
+    ROCKE: 4
+    ROCKS: 4
+    ROCKW: 4
+    ROCKNE: 4
+    ROCKSE: 4
+    ROCKSW: 4
+    ROCKNW: 4
