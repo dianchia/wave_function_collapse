@@ -1,5 +1,5 @@
 RUN:
-  mode: non-interactive
+  interactive: false
 
 WORLD:
   WIDTH: 24

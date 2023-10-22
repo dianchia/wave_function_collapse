@@ -1,10 +1,8 @@
-import argparse
-
 import hydra
 import pygame
 from omegaconf import DictConfig
 
-from .visualizer import PyGameVisualizer, Visualizer
+from .visualizer import PyGameVisualizer
 from .world import World
 
 
@@ -38,22 +36,6 @@ def non_interactive_mode(
 def interactive_mode(
     world: World, visualizer: PyGameVisualizer, surface: pygame.Surface, clock: pygame.time.Clock
 ) -> None:
-    while True:
-        if poll_event():
-            break
-
-        if not world.is_collapsed:
-            world.wave_function_collapse()
-            visualizer.update()
-
-        visualizer.draw(surface)
-        pygame.display.flip()
-        clock.tick(60)
-
-
-def waitkey_mode(
-        world: World, visualizer: PyGameVisualizer, surface: pygame.Surface, clock: pygame.time.Clock
-) -> None:
     is_running = True
     is_paused = False
 
@@ -82,12 +64,6 @@ def waitkey_mode(
 
 @hydra.main(version_base=None, config_path="../configs", config_name="config")
 def main(cfg: DictConfig) -> None:
-    valid_mode = ["non-interactive", "interactive", "waitkey"]
-    mode = cfg.RUN.mode
-    if mode not in valid_mode:
-        print(f"Invalid mode. Available options are {valid_mode}")
-        exit(1)
-
     pygame.init()
     clock = pygame.time.Clock()
 
@@ -99,16 +75,10 @@ def main(cfg: DictConfig) -> None:
     world = World(cfg)
     visualizer = PyGameVisualizer(world, cfg)
 
-    if mode == "waitkey":
-        waitkey_mode(world, visualizer, display_surface, clock)
-
-    elif mode == "non-interactive":
-        non_interactive_mode(world, visualizer, display_surface, clock)
-        return
-
-    elif mode == "interactive":
+    if cfg.RUN.interactive:
         interactive_mode(world, visualizer, display_surface, clock)
-        return
+    else:
+        non_interactive_mode(world, visualizer, display_surface, clock)
 
 
 if __name__ == "__main__":
