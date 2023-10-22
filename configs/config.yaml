@@ -1,6 +1,5 @@
 RUN:
-  interactive: false
-  waitkey: false
+  mode: non-interactive
 
 WORLD:
   WIDTH: 24

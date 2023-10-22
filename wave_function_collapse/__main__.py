@@ -8,14 +8,6 @@ from .visualizer import PyGameVisualizer, Visualizer
 from .world import World
 
 
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--interactive", action="store_true", help="Run in interactive mode")
-    parser.add_argument("--waitkey", action="store_true", help="Wait for keypress to continue")
-
-    return parser.parse_args()
-
-
 def poll_event() -> bool:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -52,8 +44,37 @@ def interactive_mode(
 
         if not world.is_collapsed:
             world.wave_function_collapse()
+            visualizer.update()
 
-        visualizer.update()
+        visualizer.draw(surface)
+        pygame.display.flip()
+        clock.tick(60)
+
+
+def waitkey_mode(
+        world: World, visualizer: PyGameVisualizer, surface: pygame.Surface, clock: pygame.time.Clock
+) -> None:
+    is_running = True
+    is_paused = False
+
+    while is_running:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                is_running = False
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    is_running = False
+                elif event.key == pygame.K_SPACE:
+                    is_paused = not is_paused
+                elif event.key == pygame.K_RIGHT and is_paused:
+                    world.wave_function_collapse()
+                    visualizer.update()
+
+        if not is_paused and not world.is_collapsed:
+            world.wave_function_collapse()
+            visualizer.update()
+
         visualizer.draw(surface)
         pygame.display.flip()
         clock.tick(60)
@@ -61,6 +82,12 @@ def interactive_mode(
 
 @hydra.main(version_base=None, config_path="../configs", config_name="config")
 def main(cfg: DictConfig) -> None:
+    valid_mode = ["non-interactive", "interactive", "waitkey"]
+    mode = cfg.RUN.mode
+    if mode not in valid_mode:
+        print(f"Invalid mode. Available options are {valid_mode}")
+        exit(1)
+
     pygame.init()
     clock = pygame.time.Clock()
 
@@ -72,11 +99,14 @@ def main(cfg: DictConfig) -> None:
     world = World(cfg)
     visualizer = PyGameVisualizer(world, cfg)
 
-    if not cfg.RUN.interactive:
+    if mode == "waitkey":
+        waitkey_mode(world, visualizer, display_surface, clock)
+
+    elif mode == "non-interactive":
         non_interactive_mode(world, visualizer, display_surface, clock)
         return
 
-    if not cfg.RUN.waitkey:
+    elif mode == "interactive":
         interactive_mode(world, visualizer, display_surface, clock)
         return
 

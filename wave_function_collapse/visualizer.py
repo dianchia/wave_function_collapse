@@ -66,6 +66,8 @@ class PyGameVisualizer(Visualizer):
                     pos = (4, 1)
 
                 tile_image.blit(text_surface, pos)
+                scaled_size = self.tile_size * self.tile_scale
+                self.world_surface.blit(tile_image, (x * scaled_size, y * scaled_size))
                 continue
 
             tile_type = self.world.get_tile_type(x, y)
